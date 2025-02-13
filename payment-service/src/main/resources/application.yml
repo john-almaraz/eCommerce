@@ -5,7 +5,7 @@ spring:
   application:
     name: payment-service
   datasource:
-    url: jdbc:mysql://localhost:3306/paymentdb?serverTimezone=UTC
+    url: jdbc:mysql://mysql-payment:3306/paymentdb?serverTimezone=UTC
     username: root
     password: mysql123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,3 +20,8 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/

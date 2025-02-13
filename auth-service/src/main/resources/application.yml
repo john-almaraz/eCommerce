@@ -5,7 +5,7 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/userdb
+    url: jdbc:postgresql://auth-postgres:5432/userdb
     username: admin
     password: postgre123
     driver-class-name: org.postgresql.Driver
@@ -19,3 +19,8 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/

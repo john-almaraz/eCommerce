@@ -5,4 +5,9 @@ spring:
   application:
     name: recommendation-service
   elasticsearch:
-    uris: http://localhost:9200
+    uris: http://elasticsearch:9200
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/

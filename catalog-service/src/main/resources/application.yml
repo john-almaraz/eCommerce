@@ -6,7 +6,12 @@ spring:
     name: catalog-service
   data:
     mongodb:
-      uri: mongodb://localhost:27017/catalogdb
+      uri: mongodb://mongo:27017/catalogdb
   jackson:
     serialization:
       indent_output: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
