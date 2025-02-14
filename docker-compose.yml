@@ -1,0 +1,160 @@
+services:
+  # Data Bases
+  auth-postgres:
+    image: postgres:15
+    container_name: auth-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: postgre123
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - eCommerce-network
+
+  mysql-order:
+    image: mysql:8
+    container_name: mysql-order
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql123
+      MYSQL_DATABASE: orderdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-order-data:/var/lib/mysql
+    networks:
+      - eCommerce-network
+
+  mysql-payment:
+    image: mysql:8
+    container_name: mysql-payment
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql123
+      MYSQL_DATABASE: paymentdb
+    ports:
+      - "3308:3306"  # Port mapping to differentiate on the host
+    volumes:
+      - mysql-payment-data:/var/lib/mysql
+    networks:
+      - eCommerce-network
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - eCommerce-network
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - eCommerce-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - eCommerce-network
+
+  # Microservices
+  api-gateway:
+    build: ./api-gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka
+    networks:
+      - eCommerce-network
+
+  eureka:
+    build: ./eureka-server
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - eCommerce-network
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - auth-postgres
+    networks:
+      - eCommerce-network
+    
+  order-service:
+    build: ./order-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-order
+    networks:
+      - eCommerce-network
+
+  catalog-service:
+    build: ./catalog-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongo
+    networks:
+      - eCommerce-network
+
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mysql-payment
+    networks:
+      - eCommerce-network
+
+  recommendation-service:
+    build: ./recommendation-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - elasticsearch
+    networks:
+      - eCommerce-network
+
+  cart-service:
+    build: ./cart-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - redis
+    networks:
+      - eCommerce-network
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      - mongo
+    networks:
+      - eCommerce-network
+
+volumes:
+  postgres-data:
+  mysql-order-data:
+  mysql-payment-data:
+  mongo-data:
+
+networks:
+  eCommerce-network:
