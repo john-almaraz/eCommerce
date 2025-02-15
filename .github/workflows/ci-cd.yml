@@ -56,48 +56,48 @@ jobs:
 
       - name: Build and Push API Gateway Image
         run: |
-          docker build -t mydockeruser/api-gateway:latest ./api-gateway-service
-          docker push mydockeruser/api-gateway:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest ./api-gateway-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
 
       - name: Build and Push Eureka Server Image
         run: |
-          docker build -t mydockeruser/eureka-server:latest ./eureka-server
-          docker push mydockeruser/eureka-server:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest ./eureka-server
+          docker push ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest
 
       - name: Build and Push Auth Service Image
         run: |
-          docker build -t mydockeruser/auth-service:latest ./auth-service
-          docker push mydockeruser/auth-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/auth-service:latest ./auth-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
 
       - name: Build and Push Order Service Image
         run: |
-          docker build -t mydockeruser/order-service:latest ./order-service
-          docker push mydockeruser/order-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/order-service:latest ./order-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/order-service:latest
 
       - name: Build and Push Catalog Service Image
         run: |
-          docker build -t mydockeruser/catalog-service:latest ./catalog-service
-          docker push mydockeruser/catalog-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/catalog-service:latest ./catalog-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/catalog-service:latest
 
       - name: Build and Push Payment Service Image
         run: |
-          docker build -t mydockeruser/payment-service:latest ./payment-service
-          docker push mydockeruser/payment-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/payment-service:latest ./payment-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/payment-service:latest
 
       - name: Build and Push Recommendation Service Image
         run: |
-          docker build -t mydockeruser/recommendation-service:latest ./recommendation-service
-          docker push mydockeruser/recommendation-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/recommendation-service:latest ./recommendation-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/recommendation-service:latest
 
       - name: Build and Push Cart Service Image
         run: |
-          docker build -t mydockeruser/cart-service:latest ./cart-service
-          docker push mydockeruser/cart-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cart-service:latest ./cart-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/cart-service:latest
 
       - name: Build and Push Notification Service Image
         run: |
-          docker build -t mydockeruser/notification-service:latest ./notification-service
-          docker push mydockeruser/notification-service:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/notification-service:latest ./notification-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/notification-service:latest
 
   deploy:
     name: Deploy to Integration Environment
