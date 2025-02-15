@@ -6,6 +6,7 @@ LABEL author=JohnAlmaraz
 # Copiar el wrapper de Maven y el pom.xml para aprovechar la cache de dependencias
 COPY mvnw pom.xml ./
 COPY .mvn .mvn
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
 
 # Copiar el resto del código y compilar el jar
