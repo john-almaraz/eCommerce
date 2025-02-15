@@ -20,11 +20,20 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Make Maven Wrapper executable
+      - name: Make Maven Wrapper Executable
         run: chmod +x mvnw
 
-      - name: Build Project and Run Tests
-        run: ./mvnw clean verify
+      - name: Build All Microservices and Run Tests
+        run: |          
+          services=("api-gateway-service" "auth-service" "order-service" "catalog-service" "payment-service" "recommendation-service" "cart-service" "notification-service")
+          for service in "${services[@]}"; do
+            if [ -f "$service/pom.xml" ]; then
+              echo "Building $service"
+              ./mvnw -f "$service/pom.xml" clean verify || exit 1
+            else
+              echo "No pom.xml found in $service, skipping build."
+            fi
+          done
 
   build-docker-images:
     name: Build Docker Images
