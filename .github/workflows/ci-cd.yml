@@ -20,6 +20,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
       - name: Build Project and Run Tests
         run: ./mvnw clean verify
 
@@ -97,4 +100,3 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: docker-compose -f docker-compose.yml up -d --build
-
