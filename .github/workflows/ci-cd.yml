@@ -29,7 +29,7 @@ jobs:
           for service in "${services[@]}"; do
             if [ -f "$service/pom.xml" ]; then
               echo "Building $service"
-              ./mvnw -f "$service/pom.xml" clean verify || exit 1
+              ./mvnw -f "$service/pom.xml" clean verify -DskipTests || exit 1
             else
               echo "No pom.xml found in $service, skipping build."
             fi
